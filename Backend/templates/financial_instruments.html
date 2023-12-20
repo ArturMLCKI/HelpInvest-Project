@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2, h3 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        p {
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    {% extends "base.html" %}
+
+    {% block content %}
+        <h2>{{ title }}</h2>
+    
+        {% if instruments %}
+            <h3>Instrument List</h3>
+            <ul>
+                {% for instrument in instruments %}
+                    <li>
+                        <a href="{{ url_for('financial_instrument_details', instrument_id=instrument.id) }}">
+                            <strong>{{ instrument.name }}</strong> - Symbol: {{ instrument.symbol }} -
+                            <em>{{ instrument.description }}</em> - Price: ${{ instrument.price }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No financial instruments available.</p>
+        {% endif %}
+    {% endblock %}
+</body>
+</html>

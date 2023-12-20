@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <!-- Dodaj style CSS, jeśli potrzebujesz -->
+    <style>
+        /* Przykładowy styl dla sekcji login/register */
+        .user-section {
+            float: right;
+            padding: 10px;
+        }
+
+        .user-section a {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>{{ title }}</h1>
+        <div class="user-section">
+            {% if not user_authenticated %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% else %}
+                <p>Welcome, {{ current_user.username }}</p>
+                <!-- Dodaj link do strony profilu użytkownika, jeśli istnieje -->
+                <a href="{{ url_for('user_profile') }}">Profile</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% endif %}
+        </div>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('hello') }}">Home</a></li>
+            <li><a href="{{ url_for('financial_instruments') }}">Financial Instruments</a></li>
+            <li><a href="{{ url_for('crypto_instruments') }}">Crypto Instruments</a></li>
+            <li><a href="{{ url_for('forex_instruments') }}">Forex Instruments</a></li>
+            <!-- Dodaj inne trasy nawigacyjne, jeśli są dostępne -->
+        </ul>
+    </nav>
+    <section>
+        {% block content %}{% endblock %}
+    </section>
+</body>
+</html>
