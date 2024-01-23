@@ -55,6 +55,8 @@ class FinancialInstrument(db.Model):
     symbol = db.Column(db.String(10), unique=True, nullable=False)
     price = db.Column(db.Float)
 
+
+
 @app.route('/')
 def hello():
     return 'Witaj w aplikacji HelpInvest!'
@@ -110,11 +112,21 @@ def get_latest_price(symbol):
         logging.error(f'Failed to fetch data for {symbol}. Error: {str(e)}')
         return None
     
-@app.route('/financial_instruments/<int:instrument_id>')
+
+ def get_monthly_price(symbol):
+    try:
+        url = f'https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol={symbol}&apikey=DY6E5QMLMQBQ6MNN'
+        r = requests.get(url)
+        data = r.json()
+    
+
+
+
+@app.route('/financial_instruments/instrument.symbol')
 def financial_instrument_details(instrument_id):
     instrument = FinancialInstrument.query.get_or_404(instrument_id)
     return render_template('instrument_details.html', title='Instrument Details', instrument=instrument)
-
+    
 @app.route('/financial_instruments', methods=['GET', 'POST'])
 def financial_instruments():
     tickers = ['AAPL', 'GOOGL', 'MSFT', 'NFLX', 'META', 'AMZN', 'AMD', 'TSLA', 'INTC', 'NVDA']
